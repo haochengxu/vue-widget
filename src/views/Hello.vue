@@ -1,11 +1,14 @@
 <template>
   <div class="hello">
-    <slider></slider>
+    <slider>
+      <slider-item v-for="i in 4"> {{i}}</slider-item>
+    </slider>
   </div>
 </template>
 
 <script>
 import Slider from '../components/slider/Slider';
+import SliderItem from '../components/slider/SliderItem';
 
 export default {
   name: 'hello',
@@ -16,6 +19,7 @@ export default {
   },
   components: {
     Slider,
+    SliderItem,
   },
 };
 </script>

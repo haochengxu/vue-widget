@@ -3,20 +3,19 @@
     <span @click="prev" class="prev"><</span>
     <span @click="next" class="next">></span>
     <div class="container" >
-      <ul v-bind:style="{left: shiftDistance + 'px'}">
-        <li class="tl" v-for="item in 4">
-          <span class="item-no">{{item}}</span>
-        </li>
-      </ul>
+      <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {},
   data() {
     return {
       shiftDistance: 0,
+      items: [],
+      activeIndex: 0,
     };
   },
   methods: {
@@ -34,7 +33,16 @@ export default {
         this.shiftDistance = this.shiftDistance - 200;
       }
     },
+    updateItems() {
+      this.items = this.$children.filters(item => item.$options.name === 'SliderItem');
+    },
+    translateItem() {
+      this.items.forEach((item, index) => {
+        item.translateItem(index, this.activeIndex);
+      });
+    },
   },
+  created() {},
 };
 </script>
 
@@ -44,24 +52,27 @@ export default {
   width: 220px;
 }
 .vw-slider .container{
+  height: 150px;
   margin: 0 10px;
   overflow: hidden;
   position: relative;
   width: 200px;
 }
-.vw-slider ul {
+/*.vw-slider ul {
   height: 200px;
   list-style: none;
-  margin: 0 15px;
+  margin: 0;
   padding: 0;
   position: relative;
   width: 800px;
+  transition: left 1s;
 }
-.vw-slider ul li{
+.vw-slider ul .slider-item{
+  background-color: gray;
   float: left;
   height: 140px;
   width: 200px;
-}
+}*/
 .vw-slider .prev {
   display: block;
   height: 140px;
