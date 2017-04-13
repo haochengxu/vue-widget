@@ -2,7 +2,7 @@
   <div class="vw-slider">
     <span @click="prev" class="prev"><</span>
     <span @click="next" class="next">></span>
-    <div class="container" >
+    <div class="container" :style="{height: height}">
       <slot></slot>
     </div>
   </div>
@@ -10,7 +10,11 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    height: {
+      default: '300px',
+    },
+  },
   data() {
     return {
       shiftDistance: 0,
@@ -20,21 +24,22 @@ export default {
   },
   methods: {
     prev() {
-      if (this.shiftDistance === 0) {
-        this.shiftDistance = -600;
-      } else {
-        this.shiftDistance = this.shiftDistance + 200;
+      this.activeIndex = this.activeIndex - 1;
+      if (this.activeIndex < 0) {
+        this.activeIndex = this.items.length - 1;
       }
+      this.translateItem();
     },
     next() {
-      if (this.shiftDistance === -600) {
-        this.shiftDistance = 0;
-      } else {
-        this.shiftDistance = this.shiftDistance - 200;
+      this.activeIndex = this.activeIndex + 1;
+      if (this.activeIndex > this.items.length - 1) {
+        this.activeIndex = 0;
       }
+      this.translateItem();
     },
     updateItems() {
-      this.items = this.$children.filters(item => item.$options.name === 'SliderItem');
+      // console.log(this.$children);
+      this.items = this.$children.filter(item => item.$options.name === 'SliderItem');
     },
     translateItem() {
       this.items.forEach((item, index) => {
@@ -42,7 +47,10 @@ export default {
       });
     },
   },
-  created() {},
+  mounted() {
+    this.updateItems();
+    this.translateItem();
+  },
 };
 </script>
 
@@ -58,21 +66,6 @@ export default {
   position: relative;
   width: 200px;
 }
-/*.vw-slider ul {
-  height: 200px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  width: 800px;
-  transition: left 1s;
-}
-.vw-slider ul .slider-item{
-  background-color: gray;
-  float: left;
-  height: 140px;
-  width: 200px;
-}*/
 .vw-slider .prev {
   display: block;
   height: 140px;

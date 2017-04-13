@@ -1,9 +1,9 @@
 <template>
   <div class="vw-slider-item"
     :style="{
-      msTransform: `translateX(${ translate }px) scale(${ scale })`,
-      webkitTransform: `translateX(${ translate }px) scale(${ scale })`,
-      transform: `translateX(${ translate }px) scale(${ scale })`
+      msTransform: `translateX(${ translate }px)`,
+      webkitTransform: `translateX(${ translate }px)`,
+      transform: `translateX(${ translate }px)`,
     }"
   >
     <slot></slot>
@@ -13,14 +13,24 @@
 <script>
   export default {
     name: 'SliderItem',
+    props: {
+      // translate: Number,
+    },
     data() {
+      window.console.log(this.$parent);
       return {
         translate: 0,
-        scale: 1,
+        // parentWidth: this.$parent.$el.offsetWidth,
       };
     },
     methods: {
-      translateItem() {},
+      translateItem(index, activeIndex) {
+        if (index === activeIndex) {
+          this.translate = 0;
+        } else {
+          this.translate = (index - activeIndex) * this.$parent.$el.offsetWidth;
+        }
+      },
     },
   };
 </script>
@@ -32,5 +42,7 @@
     left: 0px;
     width: 100%;
     height: 100%;
+    background-color: #fafafa;
+    transition: ease-in-out 0.6s;
   }
 </style>

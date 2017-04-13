@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <slider>
-      <slider-item v-for="i in 4"> {{i}}</slider-item>
+      <slider-item v-for="i in 2" key="i" >{{i}}</slider-item>
     </slider>
   </div>
 </template>
