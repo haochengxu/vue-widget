@@ -6,6 +6,7 @@
   </div>
 </template>
 
+
 <script>
 import Slider from '@/components/slider/Slider';
 import SliderItem from '@/components/slider/SliderItem';

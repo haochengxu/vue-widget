@@ -7,7 +7,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/slider',
       name: 'slider',
       component: Slider,
     },
