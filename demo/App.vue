@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import routes from './views'
+import  routes  from './views';
+
 export default {
   name: 'app',
   data() {
